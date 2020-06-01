@@ -6,7 +6,7 @@ class Durr_Hoyer:
         self.table = np.ndarray.flatten(table)
         self.N = np.size(table)
         self.y = np.random.uniform(0,self.N-1)
-        self.states = 
+        self.states = 0
 
     def circut(self,wire_num):
             for num in range(self.wire_num):
@@ -23,7 +23,7 @@ class Durr_Hoyer:
             #index=Grovers Alg
             return index
     dev1 = qml.device("default.qubit",wires=self.N)
-    def algorithmI(self,N,y)
+    def algorithmI(self,N,y):
         while (time.clock()<(22.5*sqrt(N)+1.4*log(N)^2)):
             y_prime=circuit(self.N)
             if table(y_prime) < table(self.y):
