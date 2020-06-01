@@ -6,7 +6,7 @@ class Grovers:
         self.qubits=qubits
         self.N=N
     def S(self,qubit,N): #Conditional Phase Shift Transform
-        if self.qubits is in list((range(2^N) % N)):
+        if self.qubits is in list((range(2^N*10^N) % N)):
             self.qubits = -self.qubits
         else 
             self.qubits = self.qubits
