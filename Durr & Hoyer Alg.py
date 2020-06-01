@@ -1,12 +1,15 @@
 from pennylane import numpy as np
 import qsharp
 import pennylane as qml
+import Grovers as gr
+#https://arxiv.org/pdf/quant-ph/9605034.pdf / https://arxiv.org/pdf/quant-ph/9607014.pdf
 class Durr_Hoyer:
     def ___init___(self,table):
         self.table = np.ndarray.flatten(table)
         self.N = np.size(table)
         self.y = np.random.uniform(0,self.N-1)
         self.states = 0
+        
 
     def circut(self,wire_num):
             for num in range(self.wire_num):
@@ -18,10 +21,12 @@ class Durr_Hoyer:
                     self.wire_num = self.wire_num - 1
                     continue
             basis = 1/np.sqrt(N) .* np.ones(self.wire_num)
-            basis = expval(qml.Identity(y)) .* basis
+            basis = qml.expval(qml.Identity(y)) .* basis
+            grovers = gr.calculate(self.wire_num)
             qml.broadcast(basis,wires=range(self.wire_num))
-            #index=Grovers Alg
-            return index
+            qml.broadcast(grovers,wires=range(self.wire_num))
+            return qml.expval(qml.Identity(0))
+
     dev1 = qml.device("default.qubit",wires=self.N)
     def algorithmI(self,N,y):
         while (time.clock()<(22.5*sqrt(N)+1.4*log(N)^2)):
