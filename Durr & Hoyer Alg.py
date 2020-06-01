@@ -9,9 +9,10 @@ class Durr_Hoyer:
         self.N = np.size(table)
         self.y = np.random.uniform(0,self.N-1)
         self.states = 0
-        
+        dev1 = qml.device("default.qubit",wires=self.N)
 
-    def circut(self,wire_num):
+        @qml.qnode(dev1)
+    def circuit(self,wire_num):
             for num in range(self.wire_num):
                 if table[num]<table[y]:
                     qml.BasisState(n=states[num] ,wires=num)
@@ -22,13 +23,12 @@ class Durr_Hoyer:
                     continue
             basis = 1/np.sqrt(N) .* np.ones(self.wire_num)
             basis = qml.expval(qml.Identity(y)) .* basis
-            grovers = gr.calculate(self.wire_num)
             qml.broadcast(basis,wires=range(self.wire_num))
-            qml.broadcast(grovers,wires=range(self.wire_num))
+            qubits = qml.Identity(range(N))
+            grovers = gr.calculate(qubits,self.wire_num)
             return qml.expval(qml.Identity(0))
 
-    dev1 = qml.device("default.qubit",wires=self.N)
-    def algorithmI(self,N,y):
+    def algorithm(self,N,y):
         while (time.clock()<(22.5*sqrt(N)+1.4*log(N)^2)):
             y_prime=circuit(self.N)
             if table(y_prime) < table(self.y):

@@ -2,21 +2,21 @@ import pennylane as qml
 from pennylane import numpy as np 
 #https://arxiv.org/pdf/quant-ph/9605034.pdf
 class Grovers:
-    def ___init___(self,qubit,N)
-        self.qubit=qubit
+    def ___init___(self,qubits,N)
+        self.qubits=qubits
         self.N=N
-    def S(self,qubit,N):
-        if qubit >= range(self.N):
-            self.qubit = -self.qubit
+    def S(self,qubit,N): #Conditional Phase Shift Transform
+        if self.qubits is in list((range(2^N) % N)):
+            self.qubits = -self.qubits
         else 
-            self.qubit = self.qubit
-        return self.qubit
+            self.qubits = self.qubits
+        return self.qubits
 
 
-    def T_t(self,qubit,N)
+    def T_t(self,qubits,N) #Transpose of Walsh-Hadamard transform
 
         #self.qubit=1/sqrt(N)sum(i...N-1)|i\*transpose(|0\)
-        reutrn self.qubit
+        reutrn self.qubits
 
-    def calculate(self,qubit,N)
-        return T_t(self.qubit,self.N))*S(self.qubit,0)*1/T_t(self.qubit.self.N)*S(self.qubit,self.N)
+    def calculate(self,qubits,N)
+        return T_t(self.qubits,self.N))*S(self.qubits,0)*1/T_t(self.qubits.self.N)*S(self.qubits,self.N)
