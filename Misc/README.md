@@ -1,3 +1,8 @@
 # Undergraduate-Thesis
-Mridul Sarkar's Undergraduate Thesis. \n
+Mridul Sarkar's Undergraduate Thesis.
+
 Working on an implementation of a quantum algorithm to find min. of a unsorted table.
+
+Prelim Quantum Circuit for the Alg.
+
+![image](https://github.com/mridulsar/Undergraduate-Thesis/blob/master/quantum%20circuit.jpg)
