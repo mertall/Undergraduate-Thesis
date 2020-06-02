@@ -45,14 +45,16 @@ namespace QMSA {
 
     operation S_0(qubits : 'T[], N : Double) : 'U {
 
-        using(ubits=Qubit[N]) {
-            let [] = MappedByIndex(ubits,qubits);
+        using(ubits=Qubit[1]) {
+            let f = NullSpaceMap(negative,ubits,qubits);
+            
         }
+        return f;
     }
 
     operation S_A(qubits : 'T[]) : 'U {
 
-        ///Again Not Sure lmao
+        
     }
 
     operation T_T(qubits: 'T[], N : Double) : 'U {
@@ -67,18 +69,18 @@ namespace QMSA {
 
     function Div(a : Double, b : Double) : Double {let ans = a/b; return ans;}
 
-    operation MappedByIndex(mapper : ((Int, 'T[]) -> 'U), ubits : 'T[], qubits : 'T[]) : 'U {
+    function negative( qubits : 'T[]) : 'U {
+        let v = -1* qubits;
+        return v;
+    }
+
+    function NullSpaceMap(mapper : ((Int, 'T[]) -> 'U), ubits : 'T[], qubits : 'T[]) : 'U {
         for ((idx,element) in Enumerated(qubits)) {
-            if (ubits[idx] == element) {
-                let element = mapper[idx,qubits];
+            if (ubits == element) {
+                ApplytoElement(negative(),idx,qubits);
             }
-            else {let element = qubit[idx];}
-            
-            return element;
         }
+        return qubits;
     }
-    function mapper(ind : Int, qubits : 'T[]) : 'U {
-        let v = -1* qubits[ind];
-    return v;
-    }
+
 }
