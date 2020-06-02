@@ -5,4 +5,4 @@ Working on an implementation of a quantum algorithm to find min. of a unsorted t
 
 Prelim Quantum Circuit for the Alg.
 
-![image](https://github.com/mridulsar/Undergraduate-Thesis/blob/master/quantum%20circuit.jpg)
+![image](https://github.com/mridulsar/Undergraduate-Thesis/blob/master/Thesis%20Files/quantum%20circuit.jpg)
