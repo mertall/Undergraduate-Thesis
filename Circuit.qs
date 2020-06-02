@@ -1,3 +1,5 @@
+/// Written By Mridul Sarkar
+/// 6/2/20 10:16 AM
 namespace QMSA {
     open Micrsoft.Quantum.Convert;
     open Microsoft.Quantum.Math;

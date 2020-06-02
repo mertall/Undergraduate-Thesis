@@ -1,3 +1,5 @@
+# Written By Mridul Sarkar
+# 6/2/20 10:16 AM
 
 import time
 import numpy as npp
@@ -12,7 +14,7 @@ class DH(object):
         self.y = int(npp.random.uniform(0,self.N-1))                
         
     
-    def tree(self):
+    def tree(self,s,t):
         return 
     
     def algorithm(self):
@@ -26,7 +28,7 @@ class DH(object):
             index=self.tree(t,t[y])                   
             
             self.wire_num = len(index)
-            # Q# alg
+
             if self.table(index(y_prime)) < self.table(self.y):
                 return index(y_prime)                                      
                 return y                                             
