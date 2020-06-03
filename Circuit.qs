@@ -9,9 +9,9 @@ namespace QMSA {
     operation Algorithm(N : Double, y : Int) : Result[] {
         let q = ApplytoEach(H,Intialize(N));
         let w = ApplytoAll(Oracle(N,y),q);
-        let e = ApplytoE(T_t(N),w);
+        let e = ApplytoEach(T_t(N),w);
         let r = ApplytoAll(S_0(N),e);
-        let t = ApplytoAll(T_T(N),r);
+        let t = ApplytoEach(T_T(N),r);
         let u = ApplytoAll(S_A(N),t);
 
         let result = MeasureInteger(u[0]);
@@ -51,21 +51,22 @@ namespace QMSA {
 
     // https://quantumcomputing.stackexchange.com/questions/12301/how-can-i-code-a-conditional-phase-shift-transform
     operation S_A(qubits : 'T[], N : Double): Unit is Adj + Ctl {
-    using (ubit = Qubit()) {
-        within {
-            H(ubit);
-            Z(ubit);
-        } apply {
-            for ((idx,element) in qubits) {
-                (ControlledOnInt(element, X))(element, ubit); // Third positional arugment does not sit right with me
+        using (ubit = Qubit()) {
+            within {
+                H(ubit);
+                Z(ubit);
+            } apply {
+                for ((idx,element) in qubits) {
+                    (ControlledOnInt(element, X))(qubits!, ubit); // Third positional arugment does not sit right with me
+                }
             }
         }
-    }
+        return qubits;
 }
 
     operation S_0(qubits : 'T[], N : Double) : 'U {
 
-        using(ubit=Qubit[1]) {
+        using(ubit=Qubit()) {
             within{
                 let f = ubit;
             } apply {
