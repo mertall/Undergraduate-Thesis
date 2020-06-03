@@ -1,5 +1,5 @@
 /// Written By Mridul Sarkar
-/// 6/2/20 10:16 AM
+/// 6/2/20 11:44PM
 namespace QMSA {
     open Micrsoft.Quantum.Convert;
     open Microsoft.Quantum.Math;
@@ -7,19 +7,18 @@ namespace QMSA {
     open Microsoft.Quantum.Measurement;
 
     operation Algorithm(N : Double, y : Int) : Result[] {
-
         let q = ApplytoEach(H,Intialize(N));
         let w = ApplytoAll(Oracle(N,y),q);
         let e = ApplytoE(T_t(N),w);
-        let r = ApplytoAll(S_0(),e);
+        let r = ApplytoAll(S_0(N),e);
         let t = ApplytoAll(T_T(N),r);
         let u = ApplytoAll(S_A(N),t);
 
-        let result = M(u[0]);
+        let result = MeasureInteger(u[0]);
 
         return result;
     }
-    
+
     operation Initialize(N : Double) : 'U {
         using (qubits=Qubit[N]) {
             
@@ -28,62 +27,61 @@ namespace QMSA {
             return qubits;
     }
 
-    operation Oracle(qubits: 'T[], N : Double, y : Int ) : 'U {
-        let x = Sqrt(N);
-        let w = Div(1,x);
-        let z = ApplytoEach(w,qubits);
-        let v = ApplytoEach(qubits[y],z);
-        return v;
-    }
-
-    operation T_t(qubits: 'T[], N : Double) : 'U {
-        let x = Sqrt(N);
-        let d = Div(1,x);
-        let i = ApplytoEach(i,qubits[0..1..N-1]);
-        let o = ApplytoEach(i,[1,0]);
-        return o;
-    }
-
-    operation S_0(qubits : 'T[]) : 'U {
-
-        using(ubits=Qubit[1]) {
-            let f = NullSpaceMap(negative,ubits,qubits);
-            
-        }
-        return f;
-    }
-
-    function NullSpaceMap(ubits : 'T[], qubits : 'T[]) : 'U {
-        for ((idx,element) in Enumerated(qubits)) {
-            if (ubits == element) {
-                set qubits w/= qubits[idx] <- negative(qubits[idx]);
-            }
+    operation Oracle(qubits: 'T[], N : Double, y : Int ) : Unit is Adj + Ctl {
+        within{
+            let x = Sqrt(N);
+            let w = Div(1,x);
+        } apply {
+            ApplytoEach(w,qubits);
+            ApplytoEach(qubits[y],z);
         }
         return qubits;
     }
 
-
-    operation S_A(qubits : 'T[]) : 'U {
-
-        
+    operation T_t(qubits: 'T[], N : Double) : Unit is Adj + Ctl {
+        within{
+            let x = Sqrt(N);
+            let d = Div(1,x);
+        } apply {
+            ApplytoEach(i,qubits[0..1..N-1]);
+            ApplytoEach(i,[1,0]);
+        }
+        return qubits;
     }
 
-    operation T_T(qubits: 'T[], N : Double) : 'U {
-        let x = Sqrt(N);
-        let d = Div(x,1);
-        let i = ApplytoEach(d,qubits[0..1..N-1]);
-        let e = ApplytoEach(i,-[1,0]);
-        return e;
+    // https://quantumcomputing.stackexchange.com/questions/12301/how-can-i-code-a-conditional-phase-shift-transform
+    operation S_A(qubits : 'T[], N : Double): Unit is Adj + Ctl {
+    using (ubit = Qubit()) {
+        within {
+            H(ubit);
+            Z(ubit);
+        } apply {
+            for ((idx,element) in qubits) {
+                (ControlledOnInt(element, X))(element, ubit); // Third positional arugment does not sit right with me
+            }
+        }
+    }
+}
+
+    operation S_0(qubits : 'T[], N : Double) : 'U {
+
+        using(ubit=Qubit[1]) {
+            within{
+                let f = ubit;
+            } apply {
+                for ((idx,element) in qubits) {
+                    if (ubits == element) {
+                        ApplytoElement(negative(),idx,qubits);
+                    }
+                }
+        }
+        return qubits;
+        } 
     }
 
     function Sqrt(N : Double) : Double {let ans = sqrt(N);return ans;}
 
     function Div(a : Double, b : Double) : Double {let ans = a/b; return ans;}
 
-    function negative( qubits : 'T[]) : 'U {
-        let v = -1* qubits;
-        return v;
-    }
-
-
 }
+
