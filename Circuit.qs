@@ -64,7 +64,7 @@ namespace QMSA {
         return qubits;
 }
 
-    operation S_0(qubits : 'T[], N : Double) : 'U {
+    operation S_0(qubits : 'T[], N : Double) : Unit is Adj + Ctl {
 
         using(ubit=Qubit()) {
             within{

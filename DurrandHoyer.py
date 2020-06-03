@@ -4,7 +4,10 @@
 import time
 import numpy as npp
 import qsharp
+
 from qsharp import Result
+
+from QMSA import Algorithm
 
 #https://arxiv.org/pdf/quant-ph/9605034.pdf / https://arxiv.org/pdf/quant-ph/9607014.pdf
 class DH(object):
@@ -21,16 +24,13 @@ class DH(object):
         N = self.N
         y = self.y
         t = self.table
-        index=[]
-        markers=[]
         while (time.clock()<(22.5*npp.sqrt(N)+1.4*npp.log(N)**2)):    
-            
-            index=self.tree(t,t[y])                   
-            
-            self.wire_num = len(index)
 
-            if self.table(index(y_prime)) < self.table(self.y):
-                return index(y_prime)                                      
+            y_prime=Algorithm.simulate(N,y)
+
+            if t(y_prime) < t(y):
+                return y_prime
+            else:                                    
                 return y                                             
         
         return y                                                      
