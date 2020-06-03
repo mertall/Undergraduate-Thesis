@@ -10,8 +10,8 @@ namespace QMSA {
 
         let q = ApplytoEach(H,Intialize(N));
         let w = ApplytoAll(Oracle(N,y),q);
-        let e = ApplytoAll(T_t(N),w);
-        let r = ApplytoAll(S_0,e);
+        let e = ApplytoE(T_t(N),w);
+        let r = ApplytoAll(S_0(),e);
         let t = ApplytoAll(T_T(N),r);
         let u = ApplytoAll(S_A(N),t);
 
@@ -22,7 +22,8 @@ namespace QMSA {
     
     operation Initialize(N : Double) : 'U {
         using (qubits=Qubit[N]) {
-            PrepareUniform(qubits);
+            
+            mutable qubits = PrepareUniform(qubits);
         }
             return qubits;
     }
@@ -43,7 +44,7 @@ namespace QMSA {
         return o;
     }
 
-    operation S_0(qubits : 'T[], N : Double) : 'U {
+    operation S_0(qubits : 'T[]) : 'U {
 
         using(ubits=Qubit[1]) {
             let f = NullSpaceMap(negative,ubits,qubits);
@@ -51,6 +52,16 @@ namespace QMSA {
         }
         return f;
     }
+
+    function NullSpaceMap(ubits : 'T[], qubits : 'T[]) : 'U {
+        for ((idx,element) in Enumerated(qubits)) {
+            if (ubits == element) {
+                set qubits w/= qubits[idx] <- negative(qubits[idx]);
+            }
+        }
+        return qubits;
+    }
+
 
     operation S_A(qubits : 'T[]) : 'U {
 
@@ -74,13 +85,5 @@ namespace QMSA {
         return v;
     }
 
-    function NullSpaceMap(mapper : ((Int, 'T[]) -> 'U), ubits : 'T[], qubits : 'T[]) : 'U {
-        for ((idx,element) in Enumerated(qubits)) {
-            if (ubits == element) {
-                ApplytoElement(negative(),idx,qubits);
-            }
-        }
-        return qubits;
-    }
 
 }
