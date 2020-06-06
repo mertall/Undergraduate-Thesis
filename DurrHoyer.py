@@ -1,5 +1,5 @@
 # Written By Mridul Sarkar
-# 6/2/20 10:16 AM
+# 6/6/20 2:43 AM
 
 import time
 import numpy as npp
@@ -15,10 +15,7 @@ class DH(object):
         self.table = npp.ndarray.flatten(table)                
         self.N= len(self.table)
         self.y = int(npp.random.uniform(0,self.N-1))                
-        
-    
-    def tree(self,s,t):
-        return 
+
     
     def algorithm(self):
         N = self.N

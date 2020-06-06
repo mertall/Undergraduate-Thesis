@@ -1,5 +1,5 @@
-/// Written By Mridul Sarkar
-/// 6/2/20 11:44PM
+// Written By Mridul Sarkar
+// 6/6/20 2:43 AM
 namespace QMSA {
     open Micrsoft.Quantum.Convert;
     open Microsoft.Quantum.Math;
@@ -9,10 +9,9 @@ namespace QMSA {
     operation Algorithm(N : Double, y : Int) : Result[] {
         let q = ApplytoEach(H,Intialize(N));
         let w = ApplytoAll(Oracle(N,y),q);
-        let e = ApplytoEach(T_t(N),w);
-        let r = ApplytoAll(S_0(N),e);
-        let t = ApplytoEach(T_T(N),r);
-        let u = ApplytoAll(S_A(N),t);
+        let e = ApplytoEach(T_t(N),w); // Verify this is Unitary
+        let r = ApplytoAll(S_0(N),e); 
+        let t = ApplytoEach(T_T(N),r); // Update this with new T gate, after finding proper inverse
 
         let result = MeasureInteger(u[0]);
 
@@ -33,19 +32,21 @@ namespace QMSA {
             let w = Div(1,x);
         } apply {
             ApplytoEach(w,qubits);
-            ApplytoEach(qubits[y],z);
+            ApplytoEach(qubits[y],w);
         }
         return qubits;
     }
 
     operation T_t(qubits: 'T[], N : Double) : Unit is Adj + Ctl {
-        within{
+        within //(...) Check if this is needed, referenced in   https://docs.microsoft.com/en-us/quantum/user-guide/using-qsharp/operations-functions
+        {
             let x = Sqrt(N);
             let d = Div(1,x);
         } apply {
-            ApplytoEach(i,qubits[0..1..N-1]);
-            ApplytoEach(i,[1,0]);
+            ApplytoEach(d,qubits[0..1..N-1]);
+            ApplytoEach(d,[1,0]);
         }
+        adjoint invert;
         return qubits;
     }
 
