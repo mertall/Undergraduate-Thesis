@@ -3,6 +3,4 @@ Mridul Sarkar's Undergraduate Thesis.
 
 Working on an implementation of a quantum algorithm to find min. of an unsorted table.
 
-Prelim Quantum Circuit for the Alg.
-
-![image](https://github.com/mridulsar/Undergraduate-Thesis/blob/master/Thesis%20Files/quantum%20circuit.jpg)
+This thesis will provide as an education resource for a quick introduction to quantum computing, the basic mathematics, a review of Deustch's, Shor's, and Grover's Algorithm, and finally a exciting implementation of the quantum algorithm mentioned above. 
