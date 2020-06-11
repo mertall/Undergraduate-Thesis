@@ -1,17 +1,15 @@
 // Written By Mridul Sarkar
 // 6/6/20 2:43 AM
 namespace QMSA {
-    open Micrsoft.Quantum.Convert;
-    open Microsoft.Quantum.Math;
-    open Microsoft.Quantum.Arrays;
-    open Microsoft.Quantum.Measurement;
+c
 
     operation Algorithm(N : Double, y : Int) : Result[] {
         let q = ApplytoEach(H,Intialize(N));
-        let w = ApplytoAll(Oracle(N,y),q);
-        let e = ApplytoEach(T_t(N),w); // Verify this is Unitary
+        // let w = ApplytoAll(Oracle(N,y),q);
+        let e = ApplytoEach(w[y],w); // Verify this is Unitary
         let r = ApplytoAll(S_0(N),e); 
-        let t = ApplytoEach(T_T(N),r); // Update this with new T gate, after finding proper inverse
+        let t = ApplytoEach(H,r); // Update this with new T gate, after finding proper inverse
+        let result = ApplytoAll(S_0(N,y),t);
 
         let result = MeasureInteger(u[0]);
 
@@ -51,14 +49,14 @@ namespace QMSA {
     }
 
     // https://quantumcomputing.stackexchange.com/questions/12301/how-can-i-code-a-conditional-phase-shift-transform
-    operation S_A(qubits : 'T[], N : Double): Unit is Adj + Ctl {
+    operation S_A(qubits : 'T[], N : Double, y : Int ): Unit is Adj + Ctl {
         using (ubit = Qubit()) {
             within {
                 H(ubit);
                 Z(ubit);
             } apply {
                 for ((idx,element) in qubits) {
-                    (ControlledOnInt(element, X))(qubits!, ubit); // Third positional arugment does not sit right with me
+                    (ControlledOnInt(element, X))(qubits[y], ubit); // Third positional arugment does not sit right with me
                 }
             }
         }
