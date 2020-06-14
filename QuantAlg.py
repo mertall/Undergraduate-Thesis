@@ -25,9 +25,9 @@ class DH(object):
             for i<y in range(N):
                 while t[y] > t[i]:
 
-                y_prime=Algorithm.simulate(N,t[y])
+                y_prime=Algorithm.simulate(N,t,y)
 
-                if t(y_prime) < t(y):
-                    i=0
+                if y_prime < t(y):
+                    i=N
             y = y_prime                                 
-        return y                                                      
+        return t[y]                                                     
