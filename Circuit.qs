@@ -1,7 +1,7 @@
 // Written By Mridul Sarkar
 // 6/13/20 10:12 PM
 namespace QMSA {
-c
+
 
     operation Algorithm(N : Double, y : Int, t : 'T[] ) : Result[] {
         let a=Intialize(N,t);
