@@ -14,20 +14,20 @@ class DH(object):
     def __init__(self,table):
         self.table = npp.ndarray.flatten(table)                
         self.N= len(self.table)
-        self.y = int(npp.random.uniform(0,self.N-1))                
-
+        self.y_prime = int(npp.random.uniform(0,self.N-1))
     
     def algorithm(self):
         N = self.N
-        y = self.y
+        y = N
+        y_prime = self.y_prime
         t = self.table
         while (time.clock()<(22.5*npp.sqrt(N)+1.4*npp.log(N)**2)):    
+            for i<y in range(N):
+                while t[y] > t[i]:
 
-            y_prime=Algorithm.simulate(N,y)
+                y_prime=Algorithm.simulate(N,t[y])
 
-            if t(y_prime) < t(y):
-                return y_prime
-            else:                                    
-                return y                                             
-        
+                if t(y_prime) < t(y):
+                    i=0
+            y = y_prime                                 
         return y                                                      
