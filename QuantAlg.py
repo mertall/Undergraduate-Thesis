@@ -7,7 +7,7 @@ import qsharp
 
 from qsharp import Result
 
-from QMSA import Algorithm
+from QMSA import Algorithm_Odd, Algorithm_Even
 
 #https://arxiv.org/pdf/quant-ph/9605034.pdf / https://arxiv.org/pdf/quant-ph/9607014.pdf
 class DH(object):
@@ -21,13 +21,21 @@ class DH(object):
         y = N
         y_prime = self.y_prime
         t = self.table
-        while (time.clock()<(22.5*npp.sqrt(N)+1.4*npp.log(N)**2)):    
-            for i<y in range(N):
+        time_limit = (22.5*npp.sqrt(N)+1.4*npp.log(N)**2)
+        r_t=[{0,0}]
+        ## Convert table into distint complex polar values: (rj,tj) list of tuples
+        while time.clock()< time_limit:    
+            for i in range(N):
                 while t[y] > t[i]:
+                    j = N-i
+                    if N // 2 :
+                        y_prime=Algorithm_Even.simulate(j,N,t[y],r_t)
+                    else: 
+                        y_prime=Algorithm_Odd.simulate(j,N,t[y],r_t)
 
-                y_prime=Algorithm.simulate(N,t,y)
+                if t(y_prime) < t(y):
 
-                if y_prime < t(y):
-                    i=N
+                    i=0
+
             y = y_prime                                 
-        return t[y]                                                     
+        return y                                                      
