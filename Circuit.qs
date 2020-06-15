@@ -5,34 +5,30 @@ open Microsoft.Quantum.Arrays;
 open Microsoft.Quantum.Convert;
 
 namespace QMSA {
-<<<<<<< HEAD
-=======
-
->>>>>>> 4dae863740d30ca5ed9d96ca6a34728113cee86e
 
 
-    operation Algorithm_Even(j : Int, N : Double, y : Int, t : 'T[] ) : Result[] {
-        let a=Intialize(j, N, t);
-        let z = ApplytoEach(1/sqrt(N),a);
-        let q = ApplytoEach(H,z[1..N-1]); 
-        let e = ApplytoEach(q[y],q); 
-        let r = ApplytoAll(S_A,e); 
-        let t = ApplytoEach(H,r[1..N-1]);
-        let result = ApplytoAll(S_0,t[1..N-1]);
+    operation Algorithm_Even(j : Int, N : Double, y : Int, f : 'T[] ) : Result[] {
+        let q = Intialize(j, N, f);
+        let u = ApplytoEach(1/sqrt(N),q);
+        let b = ApplytoEach(H,u[1..N-1]); 
+        let i = ApplytoEach(q[y],b); 
+        let t = ApplytoAll(S_A,i); 
+        let z = ApplytoEach(H,t[1..N-1]);
+        let result = ApplytoAll(S_0,z[1..N-1]);
 
         let result = Measure(u[0]);
 
         return result;
     }
 
-        operation Algorithm_Odd(j : Int, N : Double, y : Int, t : 'T[] ) : Result[] {
-        let a=Intialize(j, N, t);
-        let z = ApplytoEach(1/sqrt(N),a);
-        let q = ApproximateQFT(j,z[1..N-1]); 
-        let e = ApplytoEach(q[y],q); 
-        let r = ApplytoAll(S_A,e[1..N-1]); 
-        let t = ApproximateQFT(j,r[1..N-1]); 
-        let result = ApplytoAll(S_0,t[1..N-1]);
+        operation Algorithm_Odd(j : Int, N : Double, y : Int, f : 'T[] ) : Result[] {
+        let q = Intialize(j, N, f);
+        let u = ApplytoEach(1/sqrt(N),q);
+        let b = ApproximateQFT(j,u[1..N-1]); 
+        let i = ApplytoEach(q[y],b); 
+        let t = ApplytoAll(S_A,i[1..N-1]); 
+        let z = ApproximateQFT(j,t[1..N-1]); 
+        let result = ApplytoAll(S_0,z[1..N-1]);
 
         let result = Measure(u[0]);
 
@@ -79,10 +75,4 @@ namespace QMSA {
         return qubits;
         } 
     }
-
-    function Sqrt(N : Double) : Double {let ans = sqrt(N);return ans;}
-
-    function Div(a : Double, b : Double) : Double {let ans = a/b; return ans;}
-
 }
-
