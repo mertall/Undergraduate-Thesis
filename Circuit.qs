@@ -13,7 +13,7 @@ namespace QMSA {
         let b = ApplytoEach(H,u[1..N-1]); 
         let i = ApplytoEach(q[y],b); 
         let t = ApplytoAll(S_A,i); 
-        let z = ApplytoEach(H,t[1..N-1]);
+        let z = ApplytoEach(H,t[1..N-1]); // add 1/sqrtN and multiply by qubits[y]
         let result = ApplytoAll(S_0,z[1..N-1]);
 
         let result = Measure(u[0]);
