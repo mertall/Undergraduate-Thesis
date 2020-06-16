@@ -15,11 +15,11 @@ namespace QMSA {
 
     operation Algorithm_Even(truncated_length_E : Int, table_length_E : Int, random_index_E : Int, encoded_table_E : Double[] ) : Qubit[] 
     {
-        let q_bitz = p.Intialize(truncated_length_E, table_length_E, random_index_E, encoded_table_E);
-        Microsoft.Quantum.Arrays.ApplytoEach(H,q_bitz); 
-        Microsoft.Quantum.Arrays.ApplytoAll(S_A,q_bitz); 
-        Microsoft.Quantum.Arrays.ApplytoEach(H,q_bitz);
-        Microsoft.Quantum.Arrays.ApplytoAll(S_0, q_bitz);
+        let q_bitz = Intialize(truncated_length_E, table_length_E, random_index_E, encoded_table_E);
+        Microsoft.Quantum.Arrays.ApplyToEach(H,q_bitz); 
+        Microsoft.Quantum.Arrays.ApplyToAll(S_A,q_bitz); 
+        Microsoft.Quantum.Arrays.ApplyToEach(H,q_bitz);
+        Microsoft.Quantum.Arrays.ApplyToAll(S_0, q_bitz);
 
         return DumpMachine(q_bitz);
 
@@ -29,10 +29,10 @@ namespace QMSA {
     {
         let q_bits = Intialize(truncated_length_O, table_length_O, random_index_O, encoded_table_O);
 
-        Microsoft.Quantum.Arrays.ApplytoAll(QFT,q_bits); 
-        Microsoft.Quantum.Arrays.ApplytoAll(S_A,q_bits); 
-        Microsoft.Quantum.Arrays.ApplytoAll(QFT,q_bits);
-        Microsoft.Quantum.Arrays.ApplytoAll(S_0, q_bits);
+        Microsoft.Quantum.Arrays.ApplyToAll(QFT,q_bits); 
+        Microsoft.Quantum.Arrays.ApplyToAll(S_A,q_bits); 
+        Microsoft.Quantum.Arrays.ApplyToAll(QFT,q_bits);
+        Microsoft.Quantum.Arrays.ApplyToAll(S_0, q_bits);
 
         return DumpMachine(q_bits);
 
@@ -45,8 +45,8 @@ namespace QMSA {
         using (qubits=Qubit[k]) 
         {
             PrepareUniformSuperposition(k, qubits);
-            ApplytoEach(qubits,qubits[r]);
-            ApplytoAll(qubits,1/sqrt(N-k));
+            ApplyToEach(qubits,qubits[r]);
+            ApplyToAll(qubits,1/sqrt(N-k));
         return qubits;
         }
     }
@@ -70,7 +70,7 @@ namespace QMSA {
                     (ControlledOnInt(element, X))(input!, ubit);
                 }
             }
-            BigEndianasLittleEndian(input);
+            BigEndianaLittleEndian(input);
         }
 }
 
@@ -89,7 +89,7 @@ namespace QMSA {
                 for ((idx,element) in input_1) 
                 {
                     if (ubit_1 == element) {
-                        ApplytoElement(negative(),idx,input_1);
+                        ApplyToElement(negative(),idx,input_1);
                     }
                 }
             }
