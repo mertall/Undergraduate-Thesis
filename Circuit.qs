@@ -15,16 +15,14 @@ namespace QMSA {
 
     operation Algorithm_Even(truncated_length_E : Int, table_length_E : Int, random_index_E : Int, encoded_table_E : Double[] ) : Qubit[] 
     {
-        let oracle_E = p.Intialize(truncated_length_E, table_length_E, random_index_E, encoded_table_E);
-        let first_gate_E = Microsoft.Quantum.Arrays.ApplytoEach(H,oracle_E); 
-        let second_gate_E = Microsoft.Quantum.Arrays.ApplytoAll(S_A,first_gate_E); 
-        let inverse_first_gate_E = Microsoft.Quantum.Arrays.ApplytoEach(H,second_gate_E);
-        
-        let result_E = Microsoft.Quantum.Arrays.ApplytoAll(S_0, inverse_first_gate_E);
+        let q_bitz = p.Intialize(truncated_length_E, table_length_E, random_index_E, encoded_table_E);
+        Microsoft.Quantum.Arrays.ApplytoEach(H,q_bitz); 
+        Microsoft.Quantum.Arrays.ApplytoAll(S_A,q_bitz); 
+        Microsoft.Quantum.Arrays.ApplytoEach(H,q_bitz);
+        Microsoft.Quantum.Arrays.ApplytoAll(S_0, q_bitz);
 
-        let ans_E = DumpMachine(result_E);
+        return DumpMachine(q_bitz);
 
-        return ans_E;
     }
 
     operation Algorithm_Odd(truncated_length_O : Int, table_length_O : Int, random_index_O : Int, encoded_table_O : Double[] ) : Qubit[] 
@@ -34,12 +32,10 @@ namespace QMSA {
         Microsoft.Quantum.Arrays.ApplytoAll(QFT,q_bits); 
         Microsoft.Quantum.Arrays.ApplytoAll(S_A,q_bits); 
         Microsoft.Quantum.Arrays.ApplytoAll(QFT,q_bits);
-        
-        let result_O = Microsoft.Quantum.Arrays.ApplytoAll(S_0, inverse_first_gate_O);
+        Microsoft.Quantum.Arrays.ApplytoAll(S_0, q_bits);
 
-        let ans_O = DumpMachine(result_O);
+        return DumpMachine(q_bits);
 
-        return ans_O;
     }
 
     //https://quantumcomputing.stackexchange.com/questions/12471/how-do-i-encode-integers-into-bigendian-in-q/12472#12472
