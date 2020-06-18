@@ -72,6 +72,7 @@ namespace QMSA {
             }
             BigEndianaLittleEndian(input);
         }
+        return input;
 }
 
     operation S_0( input_1 : LittleEndian ) : Unit[]
@@ -95,5 +96,7 @@ namespace QMSA {
             }
             BigEndianasLittleEndian(input_1);
         } 
+        return input_1;
     }
+    
 }
