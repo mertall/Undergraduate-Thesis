@@ -1,7 +1,6 @@
 // Written By Mridul Sarkar
-// 6/16/20 14:18AM
+// 6/19/20 11:50AM
 
-// Reformat this with better variable names
 namespace QMSA {
 
     open Microsoft.Quantum.Intrinsic;
@@ -11,11 +10,8 @@ namespace QMSA {
     open Microsoft.Quantum.Arithmetic;
     open Microsoft.Quantum.Math as mt;
 
-    newtype LittleEndian = Qubit[];
-
-    operation Algorithm_Even(truncated_length_E : Int, table_length_E : Int, random_index_E : Int, encoded_table_E : Double[] ) : Result 
+    operation Algorithm_Even(q_bitz : Qubit[] ) : Result 
     {
-        let q_bitz = Intialize(truncated_length_E, table_length_E, random_index_E, encoded_table_E);
         Microsoft.Quantum.Arrays.ApplyToEach(H,q_bitz); 
         Microsoft.Quantum.Arrays.ApplyToAll(CNOT,q_bitz); 
         Microsoft.Quantum.Arrays.ApplyToEach(H,q_bitz);
@@ -25,9 +21,8 @@ namespace QMSA {
 
     }
 
-    operation Algorithm_Odd(truncated_length_O : Int, table_length_O : Int, random_index_O : Int, encoded_table_O : Double[] ) : Result 
+    operation Algorithm_Odd(q_bits : Qubit[]) : Result 
     {
-        let q_bits = Intialize(truncated_length_O, table_length_O, random_index_O, encoded_table_O);
 
         Microsoft.Quantum.Arrays.ApplyToAll(QFT,q_bits); 
         Microsoft.Quantum.Arrays.ApplyToAll(CNOT,q_bits); 
@@ -38,21 +33,22 @@ namespace QMSA {
 
     }
 
-    //https://quantumcomputing.stackexchange.com/questions/12471/how-do-i-encode-integers-into-bigendian-in-q/12472#12472
-    operation Initialize(k : Int, N : Int, r : Int, t : Double[]) : 'T[]  
-    {
+//operation ApplyConditionalPhase(subset : Int[], register : LittleEndian)
+//: Unit is Adj + Ctl {
+    //using (aux = Qubit()) {
+        //within {
+            // prepare aux in the |−⟩ state. 
+            //H(aux);
+            //Z(aux);
+        //} apply {
+            //for (element in subset) {
+                //(ControlledOnInt(element, X))(register!, aux);
+            //}
+        //}
+    //}
+//}
 
-        using (qubits=Qubit[k]) 
-        {
-            PrepareUniformSuperposition(k, qubits);
-            ApplyToEach(qubits,qubits[r]);
-            ApplyToAll(qubits,1/sqrt(N-k));
-        return qubits;
-        }
-    }
-
-
-    operation S_0( input_1 : 'T[] ) : 'T[]
+    operation S_0( input_1 : Qubit[] ) : Qubit[]
     {
 
         using(ubit_1=Qubit()) 
@@ -74,4 +70,9 @@ namespace QMSA {
         return input_1;
     }
     
+    operation Controlled_Not(input_1 : Qubit[]) : Qubit[]
+    {
+        ApplyToAll(CNOT,input_1);
+        Measure(input_1);
+    }
 }
