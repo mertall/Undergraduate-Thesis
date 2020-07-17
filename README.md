@@ -13,6 +13,6 @@ Here is a circuit showcasing the algorithm with a random index of 0 and 3 items 
 
 # Future Plans
 
-1.QESA will be implemented to solve for more than one solution and unknown number of solutions
-2.User manipulation of QESA iteration, thereby gaining control of run time as well as probabilistic outcome
-3.Collaborate with otherst to set up cool projects with QMSA/QESA!
+1.QESA will be implemented to solve for more than one solution and unknown number of solutions   
+2.User manipulation of QESA iteration, thereby gaining control of run time as well as probabilistic outcome   
+3.Collaborate with otherst to set up cool projects with QMSA/QESA      
